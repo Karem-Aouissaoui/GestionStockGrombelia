@@ -10,6 +10,7 @@ import { StockModule } from './stock/stock.module';
 import { CategorieModule } from './categorie/categorie.module';
 import { CommandesModule } from './commandes/commandes.module';
 import { FournisseursModule } from './fournisseurs/fournisseurs.module';
+import { DepotsModule } from './depots/depots.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
@@ -19,6 +20,7 @@ import { FournisseursModule } from './fournisseurs/fournisseurs.module';
     CategorieModule,
     CommandesModule,
     FournisseursModule,
+    DepotsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

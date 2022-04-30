@@ -20,7 +20,7 @@ export class ArticlesController {
     return this.articlesService.create(createArticleDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.articlesService.findAll();
   }
@@ -38,5 +38,10 @@ export class ArticlesController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.articlesService.remove(+id);
+  }
+
+  @Delete()
+  removeAll() {
+    return this.articlesService.deleteAll();
   }
 }

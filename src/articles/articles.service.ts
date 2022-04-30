@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Categorie } from 'src/categorie/entities/categorie.entity';
 import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -14,32 +13,34 @@ export class ArticlesService {
   ) {}
 
   create(createArticleDto: CreateArticleDto) {
-    //const cat = new Categorie();
-
     return this.articleRep.save(createArticleDto);
   }
 
+  //find all articles
   findAll(): Promise<Article[]> {
     return this.articleRep.find();
   }
 
+  //find article by id
   findOne(id: number) {
     return this.articleRep.findOne(id);
   }
 
+  // update article
   async update(id: number, updateArticleDto: UpdateArticleDto) {
-    /*const art = await this.findOne(id);
-    art.designation = updateArticleDto.designation;
-    art.reference = updateArticleDto.reference;
-    art.qte = updateArticleDto.qte;
-    art.categorie = updateArticleDto.categorie;*/
     return this.articleRep.update(id, updateArticleDto);
   }
-  catch(error) {
-    throw new HttpException('Error updating article', HttpStatus.BAD_REQUEST);
-  }
 
+  //delete article using id
   remove(id: number) {
     return this.articleRep.delete(id);
+  }
+
+  //delete all articles
+  async deleteAll() {
+    const arts = await this.articleRep.find();
+    for (var art of arts) {
+      this.articleRep.delete(art.id);
+    }
   }
 }
