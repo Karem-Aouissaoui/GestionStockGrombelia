@@ -20,7 +20,7 @@ export class CategorieController {
     return this.categorieService.create(createCategorieDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.categorieService.findAll();
   }

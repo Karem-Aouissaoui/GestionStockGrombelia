@@ -1,5 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CreateStockDto } from 'src/stock/dto/create-stock.dto';
+import { Stock } from 'src/stock/entities/stock.entity';
+import { StockService } from 'src/stock/stock.service';
 import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -10,10 +13,29 @@ export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private articleRep: Repository<Article>,
+    private stockService: StockService,
   ) {}
 
   create(createArticleDto: CreateArticleDto) {
-    return this.articleRep.save(createArticleDto);
+    let stock: CreateStockDto;
+    let article: Article;
+    /*this.articleRep.save(createArticleDto).then((res) => {
+      console.log(res.id);
+      this.articleRep.findOne(res.id).then((art) => {
+        console.log(art);
+        article = art;
+      });
+    });*/
+    this.articleRep
+      .save(createArticleDto)
+      .then((res) => {
+        console.log(res);
+        article = res;
+      })
+      .then(() => {
+        this.stockService.create(stock, article);
+        console.log(stock);
+      });
   }
 
   //find all articles

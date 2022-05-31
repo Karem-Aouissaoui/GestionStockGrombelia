@@ -11,8 +11,10 @@ export const config: TypeOrmModuleOptions = {
   username: 'postgres',
   password: 'karem',
   database: 'Gstock',
-  entities: [Article, Categorie, Fournisseur, Depot, Stock],
+  entities: ['dist/**/*.entity.js'],
   synchronize: true,
   autoLoadEntities: true,
 };
 //__dirname + './**/entities/*.entity{.ts,.js}'
+// __dirname + '/../**/*.entity{.ts,.js}' from nestjs official site
+//entities: [Article, Categorie, Fournisseur, Depot, Stock, Stockk]

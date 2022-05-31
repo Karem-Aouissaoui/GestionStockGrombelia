@@ -2,6 +2,8 @@ import { Article } from 'src/articles/entities/article.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -11,9 +13,6 @@ import {
 export class Stock {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @OneToOne(() => Article)
-  article: Article;
 
   @Column()
   qte_entrante: number;
@@ -26,4 +25,8 @@ export class Stock {
 
   @Column()
   date_sortie: Date;
+
+  @ManyToOne(() => Article, (article) => article.stock)
+  @JoinColumn()
+  article: Article;
 }

@@ -1,5 +1,12 @@
 import { Article } from 'src/articles/entities/article.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { LigneCommande } from 'src/commandes/entities/ligneCommande.entity';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 @Entity()
 export class Fournisseur {
   @PrimaryGeneratedColumn()
@@ -11,6 +18,9 @@ export class Fournisseur {
   @Column()
   tel: string;
 
-  @ManyToMany(() => Article, (article) => article.fournisseur)
-  article: Article[];
+  @OneToOne(
+    (type) => LigneCommande,
+    (lignecommande) => lignecommande.fournisseur,
+  )
+  lignecommande: LigneCommande;
 }
