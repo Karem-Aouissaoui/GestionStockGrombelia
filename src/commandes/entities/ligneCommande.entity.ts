@@ -20,9 +20,6 @@ export class LigneCommande {
   @ManyToOne((type) => Commande, (commande) => commande.lignecommandes)
   commande: Commande;
 
-  @OneToOne((type) => Fournisseur, (fournisseur) => fournisseur.lignecommande)
-  fournisseur: Fournisseur;
-
   @Column()
   qte: number;
 

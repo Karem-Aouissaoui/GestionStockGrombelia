@@ -1,6 +1,7 @@
 import { Article } from 'src/articles/entities/article.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -11,22 +12,20 @@ import {
 
 @Entity()
 export class Stock {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: number;
 
-  @Column()
-  qte_entrante: number;
-
-  @Column()
-  date_entree: Date;
-
-  @Column()
-  qte_sortante: number;
-
-  @Column()
-  date_sortie: Date;
-
-  @ManyToOne(() => Article, (article) => article.stock)
-  @JoinColumn()
+  @ManyToOne((type) => Article, (article) => article.stocks, {
+    onDelete: 'CASCADE',
+  })
   article: Article;
+
+  @Column()
+  qtemvm: number;
+
+  @CreateDateColumn()
+  datemvm: Date;
+
+  @Column({ enum: ['E', 'S'] })
+  mouvement: string;
 }

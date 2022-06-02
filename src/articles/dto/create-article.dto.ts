@@ -1,4 +1,5 @@
 import { Categorie } from 'src/categorie/entities/categorie.entity';
+import { Stock } from 'src/stock/entities/stock.entity';
 
 export class CreateArticleDto {
   reference: string;
@@ -11,4 +12,5 @@ export class CreateArticleDto {
   marque: string;
   unity: string; //to do===========
   categorie: Categorie;
+  stocks: Stock[];
 }

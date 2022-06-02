@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { identity } from 'rxjs';
 import { Article } from 'src/articles/entities/article.entity';
 import { Repository } from 'typeorm';
 import { CreateStockDto } from './dto/create-stock.dto';
@@ -12,15 +13,14 @@ export class StockService {
     @InjectRepository(Stock)
     private stockRep: Repository<Stock>,
   ) {}
-  create(createStockDto: CreateStockDto, article: Article) {
+  create(createStockDto: CreateStockDto) {
     //control existing article
-    console.log(article);
-    createStockDto.articleId = article.id;
-    return article;
+    const articleid = createStockDto.article.id;
+    return this.stockRep.save(createStockDto);
   }
 
-  findAll() {
-    return this.stockRep.find();
+  async findAll() {
+    return await this.stockRep.find();
   }
 
   findOne(id: number) {

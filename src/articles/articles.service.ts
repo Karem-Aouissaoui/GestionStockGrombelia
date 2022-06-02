@@ -16,31 +16,26 @@ export class ArticlesService {
     private stockService: StockService,
   ) {}
 
-  create(createArticleDto: CreateArticleDto) {
-    let stock: CreateStockDto;
-    let article: Article;
-    /*this.articleRep.save(createArticleDto).then((res) => {
-      console.log(res.id);
-      this.articleRep.findOne(res.id).then((art) => {
-        console.log(art);
-        article = art;
-      });
-    });*/
-    this.articleRep
-      .save(createArticleDto)
-      .then((res) => {
-        console.log(res);
-        article = res;
-      })
-      .then(() => {
-        this.stockService.create(stock, article);
-        console.log(stock);
-      });
+  /*
+  create(createArticleDto: CreateArticleDto){
+
+  }*/
+
+  async create(createArticleDto: CreateArticleDto) {
+    const article: Article = await this.articleRep.save(createArticleDto);
+    const newStock = new CreateStockDto();
+    newStock.qtemvm = createArticleDto.qte;
+    newStock.mouvement = 'K';
+    newStock.article = article;
+    const stock: Stock = await this.stockService.create(newStock);
   }
 
   //find all articles
   findAll(): Promise<Article[]> {
-    return this.articleRep.find();
+    return this.articleRep.find({ relations: ['stocks'] });
+  }
+  findByStocks() {
+    return this.articleRep.find({ relations: ['stocks'] });
   }
 
   //find article by id

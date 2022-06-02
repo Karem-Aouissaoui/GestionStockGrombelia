@@ -17,15 +17,16 @@ export class CategorieService {
   }
 
   findAll() {
-    return this.catRep.find();
+    return this.catRep.find({ where: { categorie: 'article.id' } });
   }
 
-  findOne(id: number) {
-    return this.catRep.findOne(id);
+  async findOne(id: number) {
+    const cat: Categorie = await this.catRep.findOne(id);
+    console.log(cat);
   }
 
   findByCategorie() {
-    return this.catRep.find({ relations: ['article'] });
+    return this.catRep.find({ relations: ['articles'] });
   }
 
   update(id: number, updateCategorieDto: UpdateCategorieDto) {

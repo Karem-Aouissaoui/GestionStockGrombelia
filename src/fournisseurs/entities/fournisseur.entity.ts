@@ -4,6 +4,7 @@ import {
   Column,
   Entity,
   ManyToMany,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -12,15 +13,18 @@ export class Fournisseur {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: false })
   nomFournisseur: string;
 
-  @Column()
+  @Column({ nullable: true })
   tel: string;
 
-  @OneToOne(
-    (type) => LigneCommande,
-    (lignecommande) => lignecommande.fournisseur,
-  )
-  lignecommande: LigneCommande;
+  @Column({ nullable: true })
+  adresse: string;
+
+  @Column({ nullable: true })
+  remarque: string;
+
+  @ManyToMany((type) => Article, (article) => article.fournisseurs)
+  articles: Article[];
 }

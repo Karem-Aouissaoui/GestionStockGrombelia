@@ -22,7 +22,7 @@ export class CategorieController {
 
   @Get('all')
   findAll() {
-    return this.categorieService.findAll();
+    return this.categorieService.findByCategorie();
   }
 
   @Get(':id')

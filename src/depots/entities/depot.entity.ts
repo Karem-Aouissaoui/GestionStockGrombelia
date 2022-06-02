@@ -8,6 +8,6 @@ export class Depot {
   @Column()
   nomDep: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 }

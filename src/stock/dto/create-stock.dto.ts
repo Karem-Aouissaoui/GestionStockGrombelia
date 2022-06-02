@@ -1,7 +1,8 @@
+import { Article } from 'src/articles/entities/article.entity';
+
 export class CreateStockDto {
-  qte_entrante: number;
-  date_entree: Date;
-  qte_sortante: number;
-  date_sortie: Date;
-  articleId: number;
+  qtemvm: number;
+  datemvm: Date;
+  mouvement: string;
+  article: Article;
 }

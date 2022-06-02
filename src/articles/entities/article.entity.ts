@@ -4,12 +4,14 @@ import { Commande } from 'src/commandes/entities/commande.entity';
 import { LigneCommande } from 'src/commandes/entities/ligneCommande.entity';
 import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
 import { Stock } from 'src/stock/entities/stock.entity';
+import { Unite } from 'src/unites/entities/unite.entity';
 import {
   AfterInsert,
   Column,
   ColumnTypeUndefinedError,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -45,8 +47,12 @@ export class Article {
   @Column({ nullable: true })
   marque: string;
 
-  @Column() // to do =========================
-  unity: string;
+  @ManyToOne((type) => Unite, (unite) => unite.articles)
+  unite: Unite;
+
+  @ManyToMany((type) => Fournisseur, (fournisseur) => fournisseur.articles)
+  @JoinTable()
+  fournisseurs: Fournisseur[];
 
   @OneToOne((type) => LigneCommande, (lignecommande) => lignecommande.article)
   lignecommande: LigneCommande;
@@ -56,8 +62,8 @@ export class Article {
   })
   categorie: Categorie;
 
-  @OneToMany(() => Stock, (stock) => (stock) => stock.article)
-  stock: Stock[];
+  @OneToMany((type) => Stock, (stock) => stock.article)
+  stocks: Stock[];
 
   @ManyToOne((type) => Approvisionnement, (appro) => appro.articles)
   approvisionnement: Approvisionnement;
