@@ -1,5 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ArticlesService } from 'src/articles/articles.service';
+import { Article } from 'src/articles/entities/article.entity';
 import { Repository } from 'typeorm';
 import { CreateDepotDto } from './dto/create-depot.dto';
 import { UpdateDepotDto } from './dto/update-depot.dto';
@@ -11,12 +13,14 @@ export class DepotsService {
     @InjectRepository(Depot)
     private depotRep: Repository<Depot>,
   ) {}
-  create(createDepotDto: CreateDepotDto) {
-    return this.depotRep.save(createDepotDto);
+
+  async create(createDepotDto: CreateDepotDto) {
+    const depot: Depot = await this.depotRep.save(createDepotDto);
+    console.log(depot);
   }
 
   findAll() {
-    return this.depotRep.find();
+    return this.depotRep.find({ relations: ['articles'] });
   }
 
   findOne(id: number) {

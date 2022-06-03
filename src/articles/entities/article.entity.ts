@@ -2,6 +2,7 @@ import { Approvisionnement } from 'src/approvisionnements/entities/approvisionne
 import { Categorie } from 'src/categorie/entities/categorie.entity';
 import { Commande } from 'src/commandes/entities/commande.entity';
 import { LigneCommande } from 'src/commandes/entities/ligneCommande.entity';
+import { Depot } from 'src/depots/entities/depot.entity';
 import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
 import { Stock } from 'src/stock/entities/stock.entity';
 import { Unite } from 'src/unites/entities/unite.entity';
@@ -48,6 +49,7 @@ export class Article {
   marque: string;
 
   @ManyToOne((type) => Unite, (unite) => unite.articles)
+  @JoinColumn()
   unite: Unite;
 
   @ManyToMany((type) => Fournisseur, (fournisseur) => fournisseur.articles)
@@ -64,6 +66,9 @@ export class Article {
 
   @OneToMany((type) => Stock, (stock) => stock.article)
   stocks: Stock[];
+
+  @ManyToOne((type) => Depot, (depot) => depot.articles)
+  depot: Depot;
 
   @ManyToOne((type) => Approvisionnement, (appro) => appro.articles)
   approvisionnement: Approvisionnement;

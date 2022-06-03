@@ -3,6 +3,7 @@ import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -15,6 +16,7 @@ export class LigneCommande {
   id: number;
 
   @OneToOne((type) => Article, (article) => article.lignecommande)
+  @JoinColumn()
   article: Article;
 
   @ManyToOne((type) => Commande, (commande) => commande.lignecommandes)

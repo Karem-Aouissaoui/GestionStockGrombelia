@@ -20,7 +20,7 @@ export class StockService {
   }
 
   async findAll() {
-    return await this.stockRep.find();
+    return await this.stockRep.find({ relations: ['articles'] });
   }
 
   findOne(id: number) {
