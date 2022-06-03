@@ -20,6 +20,6 @@ export class Approvisionnement {
   @ManyToMany((type) => User, (user) => user.approvisionnements)
   users: User[];
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 }

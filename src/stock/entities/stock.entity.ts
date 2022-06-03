@@ -1,4 +1,5 @@
 import { Article } from 'src/articles/entities/article.entity';
+import { Depot } from 'src/depots/entities/depot.entity';
 import {
   Column,
   CreateDateColumn,
@@ -12,7 +13,7 @@ import {
 
 @Entity()
 export class Stock {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne((type) => Article, (article) => article.stocks, {
@@ -28,4 +29,13 @@ export class Stock {
 
   @Column({ enum: ['E', 'S'] })
   mouvement: string;
+
+  @Column({ nullable: true })
+  demandeur: string;
+
+  @Column({ nullable: true })
+  utilisation: string;
+
+  @ManyToOne((type) => Depot, (depot) => depot.stocks, { eager: true })
+  depot: Depot;
 }

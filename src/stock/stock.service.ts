@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { identity } from 'rxjs';
+import { ArticlesService } from 'src/articles/articles.service';
 import { Article } from 'src/articles/entities/article.entity';
+import { DepotsService } from 'src/depots/depots.service';
+import { Depot } from 'src/depots/entities/depot.entity';
 import { Repository } from 'typeorm';
 import { CreateStockDto } from './dto/create-stock.dto';
 import { UpdateStockDto } from './dto/update-stock.dto';
@@ -12,15 +15,19 @@ export class StockService {
   constructor(
     @InjectRepository(Stock)
     private stockRep: Repository<Stock>,
+    private depotService: DepotsService,
   ) {}
-  create(createStockDto: CreateStockDto) {
-    //control existing article
-    const articleid = createStockDto.article.id;
-    return this.stockRep.save(createStockDto);
+
+  async create(createStockDto: CreateStockDto) {
+    const depot: Depot = await this.depotService.findOne(
+      createStockDto.depotId,
+    );
+    const { depotId, ...input } = createStockDto;
+    return this.stockRep.save({ ...input, depot: depot });
   }
 
   async findAll() {
-    return await this.stockRep.find({ relations: ['articles'] });
+    return await this.stockRep.find({ relations: ['Depot'] });
   }
 
   findOne(id: number) {

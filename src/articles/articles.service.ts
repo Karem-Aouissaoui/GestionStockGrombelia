@@ -1,10 +1,13 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DepotsService } from 'src/depots/depots.service';
+import { Depot } from 'src/depots/entities/depot.entity';
 import { CreateStockDto } from 'src/stock/dto/create-stock.dto';
 import { Stock } from 'src/stock/entities/stock.entity';
 import { StockService } from 'src/stock/stock.service';
 import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
+import { OutStockDto } from './dto/outstock.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { Article } from './entities/article.entity';
 
@@ -16,24 +19,54 @@ export class ArticlesService {
     private stockService: StockService,
   ) {}
 
-  /*
-  create(createArticleDto: CreateArticleDto){
-
-  }*/
-
   async create(createArticleDto: CreateArticleDto) {
-    const article: Article = await this.articleRep.save(createArticleDto);
-    const newStock = new CreateStockDto();
-    newStock.qtemvm = createArticleDto.qte;
-    newStock.mouvement = 'K';
-    newStock.article = article;
-    const stock: Stock = await this.stockService.create(newStock);
+    if (createArticleDto.qte == null) {
+      return this.articleRep.save(createArticleDto);
+    } else if (createArticleDto.qte > 0) {
+      const article: Article = await this.articleRep.save(createArticleDto);
+      this.stockService.create({
+        qtemvm: article.qte,
+        datemvm: null,
+        mouvement: 'E',
+        article: article,
+        depotId: createArticleDto.depotId,
+      });
+    }
+  }
+
+  //post to AddArticle route using article id, we need to find the article then update its qte and location
+  async addStock(newStock: CreateStockDto) {
+    const article: Article = await this.findOne(newStock.article.id);
+    //update article qte
+    let newQte = article.qte + newStock.qtemvm;
+    newStock.mouvement = 'E';
+    await this.update(article.id, { qte: newQte });
+    return this.stockService.create(newStock);
+  }
+
+  async outStock(outStock: OutStockDto) {
+    const article: Article = await this.findOne(outStock.article.id);
+    let newQte = article.qte - outStock.qtemvm;
+    if (newQte < 0) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          error: 'quantité en stock insuffaisante',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    outStock.mouvement = 'S';
+    await this.update(article.id, { qte: newQte });
+    return this.stockService.create(outStock);
   }
 
   //find all articles
   findAll(): Promise<Article[]> {
-    return this.articleRep.find({ relations: ['stocks'] });
+    return this.articleRep.find();
   }
+
   findByStocks() {
     return this.articleRep.find({ relations: ['stocks'] });
   }

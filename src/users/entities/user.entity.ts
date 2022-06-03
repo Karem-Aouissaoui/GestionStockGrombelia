@@ -1,4 +1,5 @@
 import { Approvisionnement } from 'src/approvisionnements/entities/approvisionnement.entity';
+import { Roles } from 'src/auth/models/roles.enum';
 import {
   Column,
   Entity,
@@ -23,13 +24,15 @@ export class User {
   @Generated('uuid')
   public resetToken: string;
 */
-  @ManyToMany(() => Role, (role) => role.users)
-  @JoinTable({ name: 'user_role' })
-  public roles: Role[];
+
+  @ManyToMany((type) => Role)
+  @JoinTable()
+  roles: Roles[];
 
   @ManyToMany((type) => Approvisionnement, (appro) => appro.users)
   @JoinTable()
   approvisionnements: Approvisionnement[];
+
   /*
   @Column({
     name: 'reset_token_expiration',

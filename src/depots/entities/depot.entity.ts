@@ -1,4 +1,5 @@
 import { Article } from 'src/articles/entities/article.entity';
+import { Stock } from 'src/stock/entities/stock.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -12,6 +13,6 @@ export class Depot {
   @Column({ nullable: true })
   description: string;
 
-  @OneToMany((type) => Article, (article) => article.depot)
-  articles: Article[];
+  @OneToMany((type) => Stock, (stock) => stock.depot)
+  stocks: Stock[];
 }

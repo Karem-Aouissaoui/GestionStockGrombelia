@@ -10,6 +10,7 @@ export class CreateArticleDto {
   reference: string;
   designation: string;
   qte: number;
+  qte_alert: number;
   prixHT: string;
   prixTTC: string;
   description: string;
@@ -19,7 +20,6 @@ export class CreateArticleDto {
   fournisseur: Fournisseur;
   ligneCommande: LigneCommande;
   categorie: Categorie;
-  stocks: Stock[];
-  depot: Depot;
+  depotId: number;
   approvisionnement: Approvisionnement;
 }

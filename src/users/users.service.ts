@@ -4,6 +4,7 @@ import { encodePassword } from 'src/auth/utils/bcrypt';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Role } from './entities/role.entity';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -11,6 +12,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    @InjectRepository(Role)
+    private readonly roleRepository: Repository<Role>,
   ) {}
 
   private readonly users = [
@@ -33,8 +36,12 @@ export class UsersService {
   }*/
 
   //find all users
-  findAll() {
-    return this.usersRepository.find();
+  async findAll() {
+    const users: User[] = await this.usersRepository.find({
+      relations: ['roles'],
+    });
+    console.log(users);
+    return users;
   }
   //for database
   public async findByUsername(username: string): Promise<User | undefined> {
@@ -51,16 +58,19 @@ export class UsersService {
     return this.usersRepository.findOne(id);
   }
 
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: any) {
     const password = encodePassword(createUserDto.password);
     createUserDto.password = password;
+    const role: Role = await this.roleRepository.findOne(createUserDto.role.id);
+    createUserDto.role = role;
     return this.usersRepository.save(createUserDto);
   }
 
-  register(createUserDto: CreateUserDto) {
+  register(createUserDto: any) {
     return this.usersRepository.save(createUserDto);
   }
-  update(id: number, updateUserDto: UpdateUserDto) {
+
+  update(id: number, updateUserDto: any) {
     return this.usersRepository.update(id, updateUserDto);
   }
 

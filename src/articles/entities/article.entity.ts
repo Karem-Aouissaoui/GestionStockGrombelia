@@ -33,10 +33,10 @@ export class Article {
   @Column()
   designation: string;
 
-  @Column()
+  @Column({ default: 0 })
   qte: number;
 
-  @Column()
+  @Column({ default: 10 })
   qte_alert: number;
 
   @Column({ nullable: true })
@@ -66,9 +66,6 @@ export class Article {
 
   @OneToMany((type) => Stock, (stock) => stock.article)
   stocks: Stock[];
-
-  @ManyToOne((type) => Depot, (depot) => depot.articles)
-  depot: Depot;
 
   @ManyToOne((type) => Approvisionnement, (appro) => appro.articles)
   approvisionnement: Approvisionnement;
