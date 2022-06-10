@@ -18,9 +18,9 @@ export class ArticlesService {
     private articleRep: Repository<Article>,
     private stockService: StockService,
   ) {}
-
+  /*
   async create(createArticleDto: CreateArticleDto) {
-    if (createArticleDto.qte == null) {
+    if (createArticleDto.qte === undefined) {
       return this.articleRep.save(createArticleDto);
     } else if (createArticleDto.qte > 0) {
       const article: Article = await this.articleRep.save(createArticleDto);
@@ -33,9 +33,20 @@ export class ArticlesService {
       });
     }
   }
+*/
 
   //post to AddArticle route using article id, we need to find the article then update its qte and location
+  /*
   async addStock(newStock: CreateStockDto) {
+    if (newStock.qtemvm <= 0) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          error: 'quantité invalide (négative)',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
     const article: Article = await this.findOne(newStock.article.id);
     //update article qte
     let newQte = article.qte + newStock.qtemvm;
@@ -45,6 +56,15 @@ export class ArticlesService {
   }
 
   async outStock(outStock: OutStockDto) {
+    if (outStock.qtemvm <= 0) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_ACCEPTABLE,
+          error: 'quantité invalide (négative)',
+        },
+        HttpStatus.FORBIDDEN,
+      );
+    }
     const article: Article = await this.findOne(outStock.article.id);
     let newQte = article.qte - outStock.qtemvm;
     if (newQte < 0) {
@@ -61,7 +81,7 @@ export class ArticlesService {
     await this.update(article.id, { qte: newQte });
     return this.stockService.create(outStock);
   }
-
+*/
   //find all articles
   findAll(): Promise<Article[]> {
     return this.articleRep.find();
@@ -75,11 +95,11 @@ export class ArticlesService {
   findOne(id: number) {
     return this.articleRep.findOne(id);
   }
-
+  /*
   // update article
   async update(id: number, updateArticleDto: UpdateArticleDto) {
     return this.articleRep.update(id, updateArticleDto);
-  }
+  }*/
 
   //delete article using id
   remove(id: number) {

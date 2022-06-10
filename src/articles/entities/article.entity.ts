@@ -33,9 +33,6 @@ export class Article {
   @Column()
   designation: string;
 
-  @Column({ default: 0 })
-  qte: number;
-
   @Column({ default: 10 })
   qte_alert: number;
 
@@ -52,23 +49,17 @@ export class Article {
   @JoinColumn()
   unite: Unite;
 
-  @ManyToMany((type) => Fournisseur, (fournisseur) => fournisseur.articles)
-  @JoinTable()
-  fournisseurs: Fournisseur[];
-
-  @OneToOne((type) => LigneCommande, (lignecommande) => lignecommande.article)
-  lignecommande: LigneCommande;
-
   @ManyToOne(() => Categorie, (categorie) => categorie.articles, {
     eager: true,
+    cascade: true,
   })
   categorie: Categorie;
 
   @OneToMany((type) => Stock, (stock) => stock.article)
   stocks: Stock[];
 
-  @ManyToOne((type) => Approvisionnement, (appro) => appro.articles)
-  approvisionnement: Approvisionnement;
+  @OneToMany((type) => Approvisionnement, (appro) => appro.article)
+  approvisionnement: Approvisionnement[];
 
   @CreateDateColumn()
   date_creation: string;

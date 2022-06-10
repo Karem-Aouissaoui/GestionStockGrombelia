@@ -1,3 +1,4 @@
+import { Approvisionnement } from 'src/approvisionnements/entities/approvisionnement.entity';
 import { Article } from 'src/articles/entities/article.entity';
 import { LigneCommande } from 'src/commandes/entities/ligneCommande.entity';
 import {
@@ -5,6 +6,7 @@ import {
   Entity,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -16,6 +18,9 @@ export class Fournisseur {
   @Column({ nullable: false })
   nomFournisseur: string;
 
+  @Column()
+  reference: string;
+
   @Column({ nullable: true })
   tel: string;
 
@@ -25,6 +30,6 @@ export class Fournisseur {
   @Column({ nullable: true })
   remarque: string;
 
-  @ManyToMany((type) => Article, (article) => article.fournisseurs)
-  articles: Article[];
+  @OneToMany((type) => Approvisionnement, (appro) => appro.fournisseur)
+  appro: Approvisionnement[];
 }

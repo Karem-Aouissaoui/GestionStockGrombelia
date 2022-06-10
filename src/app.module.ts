@@ -15,6 +15,8 @@ import { RoleService } from './users/role.service';
 import { CommandesModule } from './commandes/commandes.module';
 import { ApprovisionnementsModule } from './approvisionnements/approvisionnements.module';
 import { UnitesModule } from './unites/unites.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { MailingModule } from './mailing/mailing.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
@@ -28,6 +30,7 @@ import { UnitesModule } from './unites/unites.module';
     AuthModule,
     ApprovisionnementsModule,
     UnitesModule,
+    MailingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

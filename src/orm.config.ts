@@ -4,6 +4,7 @@ import { Categorie } from './categorie/entities/categorie.entity';
 import { Depot } from './depots/entities/depot.entity';
 import { Fournisseur } from './fournisseurs/entities/fournisseur.entity';
 import { Stock } from './stock/entities/stock.entity';
+import { StockSubscriber } from './stock/stock.subscriber';
 export const config: TypeOrmModuleOptions = {
   type: 'postgres',
   host: 'localhost',
@@ -14,6 +15,7 @@ export const config: TypeOrmModuleOptions = {
   entities: ['dist/**/*.entity.js'],
   synchronize: true,
   autoLoadEntities: true,
+  subscribers: [StockSubscriber],
 };
 //__dirname + './**/entities/*.entity{.ts,.js}'
 // __dirname + '/../**/*.entity{.ts,.js}' from nestjs official site

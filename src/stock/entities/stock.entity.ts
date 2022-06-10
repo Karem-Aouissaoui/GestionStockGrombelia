@@ -1,6 +1,8 @@
 import { Article } from 'src/articles/entities/article.entity';
 import { Depot } from 'src/depots/entities/depot.entity';
 import {
+  AfterInsert,
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -38,4 +40,16 @@ export class Stock {
 
   @ManyToOne((type) => Depot, (depot) => depot.stocks, { eager: true })
   depot: Depot;
+
+  @BeforeInsert()
+  test() {
+    console.log('before test');
+  }
+  @AfterInsert()
+  alertfunc() {
+    /*if (this.article.qte < this.article.qte_alert) {
+      console.log('alert!!!!!!!!!!!!!!!!');
+    }*/
+    console.log('listener test');
+  }
 }

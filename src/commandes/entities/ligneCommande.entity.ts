@@ -14,11 +14,11 @@ import { Commande } from './commande.entity';
 export class LigneCommande {
   @PrimaryGeneratedColumn()
   id: number;
-
+  /*
   @OneToOne((type) => Article, (article) => article.lignecommande)
   @JoinColumn()
   article: Article;
-
+*/
   @ManyToOne((type) => Commande, (commande) => commande.lignecommandes)
   commande: Commande;
 

@@ -1,11 +1,34 @@
 import { Injectable } from '@nestjs/common';
-import { CreateApprovisionnementDto } from './dto/create-approvisionnement.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ArticlesService } from 'src/articles/articles.service';
+import { Repository } from 'typeorm';
+import { EtatBesoinDto } from './dto/create-approvisionnement.dto';
 import { UpdateApprovisionnementDto } from './dto/update-approvisionnement.dto';
+import { Approvisionnement } from './entities/approvisionnement.entity';
+import { Demandeur } from './entities/demandeur.entity';
+import { Imputation } from './entities/imputation.entity';
 
 @Injectable()
 export class ApprovisionnementsService {
-  create(createApprovisionnementDto: CreateApprovisionnementDto) {
-    return 'This action adds a new approvisionnement';
+  constructor(
+    @InjectRepository(Approvisionnement)
+    private approRep: Repository<Approvisionnement>,
+    private articleservice: ArticlesService,
+  ) {}
+
+  async create(createApproDto: EtatBesoinDto) {
+    //console.log(createApproDto);
+    const approDto: Approvisionnement = await this.approRep.create();
+    approDto.reference = createApproDto.reference;
+    approDto.article = await this.articleservice.findOne(
+      createApproDto.articleId,
+    );
+    approDto.qte_demande = createApproDto.qte_demande;
+    approDto.imputation = new Imputation(createApproDto.imputation);
+    approDto.demandeur = new Demandeur(createApproDto.demandeur);
+
+    console.log(approDto);
+    return this.approRep.save(approDto);
   }
 
   findAll() {

@@ -29,10 +29,6 @@ export class User {
   @JoinTable()
   roles: Roles[];
 
-  @ManyToMany((type) => Approvisionnement, (appro) => appro.users)
-  @JoinTable()
-  approvisionnements: Approvisionnement[];
-
   /*
   @Column({
     name: 'reset_token_expiration',
