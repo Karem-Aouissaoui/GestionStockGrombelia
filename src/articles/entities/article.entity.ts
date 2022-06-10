@@ -45,7 +45,9 @@ export class Article {
   @Column({ nullable: true })
   marque: string;
 
-  @ManyToOne((type) => Unite, (unite) => unite.articles)
+  @ManyToOne((type) => Unite, (unite) => unite.articles, {
+    cascade: ['insert'],
+  })
   @JoinColumn()
   unite: Unite;
 

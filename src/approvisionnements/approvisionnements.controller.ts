@@ -9,7 +9,10 @@ import {
 } from '@nestjs/common';
 import { ApprovisionnementsService } from './approvisionnements.service';
 import { EtatBesoinDto } from './dto/create-approvisionnement.dto';
-import { UpdateApprovisionnementDto } from './dto/update-approvisionnement.dto';
+import {
+  UpdateApprovisionnementDto,
+  updateEtatbesoin,
+} from './dto/update-approvisionnement.dto';
 
 @Controller('appro')
 export class ApprovisionnementsController {
@@ -17,12 +20,15 @@ export class ApprovisionnementsController {
     private readonly approvisionnementsService: ApprovisionnementsService,
   ) {}
 
+  //section etat de besoin
   @Post()
   create(@Body() createApprovisionnementDto: EtatBesoinDto) {
-    return this.approvisionnementsService.create(createApprovisionnementDto);
+    return this.approvisionnementsService.createEtatBesoin(
+      createApprovisionnementDto,
+    );
   }
 
-  @Get('all')
+  @Get('etatbesoin/all')
   findAll() {
     return this.approvisionnementsService.findAll();
   }
@@ -33,14 +39,8 @@ export class ApprovisionnementsController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateApprovisionnementDto: UpdateApprovisionnementDto,
-  ) {
-    return this.approvisionnementsService.update(
-      +id,
-      updateApprovisionnementDto,
-    );
+  update(@Param('id') id: string, @Body() updateEtatbesoin: updateEtatbesoin) {
+    return this.approvisionnementsService.update(+id, updateEtatbesoin);
   }
 
   @Delete(':id')

@@ -6,11 +6,15 @@ import { Article } from './entities/article.entity';
 import { StockModule } from 'src/stock/stock.module';
 import { AlertService } from './alert.service';
 import { ScheduleModule } from '@nestjs/schedule';
+import { CategorieModule } from 'src/categorie/categorie.module';
+import { UnitesModule } from 'src/unites/unites.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Article]),
     StockModule,
+    CategorieModule,
+    UnitesModule,
     ScheduleModule.forRoot(),
   ],
   controllers: [ArticlesController],

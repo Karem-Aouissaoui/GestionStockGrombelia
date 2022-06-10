@@ -1,10 +1,12 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CategorieService } from 'src/categorie/categorie.service';
 import { DepotsService } from 'src/depots/depots.service';
 import { Depot } from 'src/depots/entities/depot.entity';
 import { CreateStockDto } from 'src/stock/dto/create-stock.dto';
 import { Stock } from 'src/stock/entities/stock.entity';
 import { StockService } from 'src/stock/stock.service';
+import { UnitesService } from 'src/unites/unites.service';
 import { Repository } from 'typeorm';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { OutStockDto } from './dto/outstock.dto';
@@ -16,8 +18,22 @@ export class ArticlesService {
   constructor(
     @InjectRepository(Article)
     private articleRep: Repository<Article>,
+    private catService: CategorieService,
+    private uniteService: UnitesService,
     private stockService: StockService,
   ) {}
+
+  async create(newArticle: CreateArticleDto) {
+    const article: Article = await this.articleRep.create();
+    article.categorie = await this.catService.findOne(newArticle.categorieId);
+    article.unite = await this.uniteService.findOne(newArticle.uniteId);
+    article.reference = newArticle.reference;
+    article.designation = newArticle.designation;
+    article.qte_alert = newArticle.qte_alert;
+    article.model = newArticle.model;
+    article.marque = newArticle.marque;
+    return this.articleRep.save(article);
+  }
   /*
   async create(createArticleDto: CreateArticleDto) {
     if (createArticleDto.qte === undefined) {
@@ -95,11 +111,19 @@ export class ArticlesService {
   findOne(id: number) {
     return this.articleRep.findOne(id);
   }
-  /*
+
   // update article
-  async update(id: number, updateArticleDto: UpdateArticleDto) {
-    return this.articleRep.update(id, updateArticleDto);
-  }*/
+  async update(id: number, newArticle: UpdateArticleDto) {
+    const article: Article = await this.articleRep.create();
+    article.categorie = await this.catService.findOne(newArticle.categorieId);
+    article.unite = await this.uniteService.findOne(newArticle.uniteId);
+    article.reference = newArticle.reference;
+    article.designation = newArticle.designation;
+    article.qte_alert = newArticle.qte_alert;
+    article.model = newArticle.model;
+    article.marque = newArticle.marque;
+    return this.articleRep.update(id, article);
+  }
 
   //delete article using id
   remove(id: number) {

@@ -8,5 +8,6 @@ import { Unite } from './entities/unite.entity';
   imports: [TypeOrmModule.forFeature([Unite])],
   controllers: [UnitesController],
   providers: [UnitesService],
+  exports: [UnitesService],
 })
 export class UnitesModule {}

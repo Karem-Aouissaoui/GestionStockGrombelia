@@ -12,7 +12,6 @@ export class CategorieService {
   constructor(
     @InjectRepository(Categorie)
     private catRep: Repository<Categorie>,
-    private artService: ArticlesService,
   ) {}
 
   create(createCategorieDto: CreateCategorieDto) {
@@ -25,7 +24,7 @@ export class CategorieService {
 
   async findOne(id: number) {
     const cat: Categorie = await this.catRep.findOne(id);
-    console.log(cat);
+    return cat;
   }
 
   findByCategorie() {

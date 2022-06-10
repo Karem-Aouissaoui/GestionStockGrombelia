@@ -16,7 +16,7 @@ export class ApprovisionnementsService {
     private articleservice: ArticlesService,
   ) {}
 
-  async create(createApproDto: EtatBesoinDto) {
+  async createEtatBesoin(createApproDto: EtatBesoinDto) {
     //console.log(createApproDto);
     const approDto: Approvisionnement = await this.approRep.create();
     approDto.reference = createApproDto.reference;
@@ -29,6 +29,10 @@ export class ApprovisionnementsService {
 
     console.log(approDto);
     return this.approRep.save(approDto);
+  }
+
+  async updateEtatbesoin(id, updateEtatbesoin) {
+    return this.approRep.update(id, updateEtatbesoin);
   }
 
   findAll() {

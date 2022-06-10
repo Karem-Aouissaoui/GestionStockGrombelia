@@ -5,3 +5,8 @@ export class EtatBesoinDto {
   imputation: string;
   demandeur: string;
 }
+
+export class EtatDemandeTarif {
+  fournisseurId: number;
+  qte_commande: number;
+}

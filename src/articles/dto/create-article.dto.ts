@@ -9,17 +9,11 @@ import { Unite } from 'src/unites/entities/unite.entity';
 export class CreateArticleDto {
   reference: string;
   designation: string;
-  qte: number;
   qte_alert: number;
-  prixHT: string;
-  prixTTC: string;
   description: string;
   model: string;
   marque: string;
-  unity: Unite;
-  fournisseur: Fournisseur;
-  ligneCommande: LigneCommande;
-  categorie: Categorie;
-  depotId: number;
+  uniteId: number;
+  categorieId: number;
   approvisionnement: Approvisionnement;
 }
