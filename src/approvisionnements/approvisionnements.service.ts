@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ArticlesService } from 'src/articles/articles.service';
 import { Repository } from 'typeorm';
 import { EtatBesoinDto } from './dto/create-approvisionnement.dto';
-import { UpdateApprovisionnementDto } from './dto/update-approvisionnement.dto';
+import { UpdateApproDto } from './dto/update-approvisionnement.dto';
 import { Approvisionnement } from './entities/approvisionnement.entity';
 import { Demandeur } from './entities/demandeur.entity';
 import { Imputation } from './entities/imputation.entity';
@@ -36,18 +36,18 @@ export class ApprovisionnementsService {
   }
 
   findAll() {
-    return `This action returns all approvisionnements`;
+    return this.approRep.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} approvisionnement`;
+    return this.approRep.findOne(id);
   }
 
-  update(id: number, updateApprovisionnementDto: UpdateApprovisionnementDto) {
-    return `This action updates a #${id} approvisionnement`;
+  update(id: number, updateApproDto: UpdateApproDto) {
+    //return this.approRep.update(id,);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} approvisionnement`;
+    return this.approRep.delete(id);
   }
 }

@@ -13,7 +13,6 @@ export class CreateArticleDto {
   description: string;
   model: string;
   marque: string;
-  uniteId: number;
-  categorieId: number;
-  approvisionnement: Approvisionnement;
+  unite: Unite;
+  categorie: Categorie;
 }

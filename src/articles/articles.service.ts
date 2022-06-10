@@ -24,15 +24,15 @@ export class ArticlesService {
   ) {}
 
   async create(newArticle: CreateArticleDto) {
-    const article: Article = await this.articleRep.create();
+    /*const article: Article = await this.articleRep.create();
     article.categorie = await this.catService.findOne(newArticle.categorieId);
     article.unite = await this.uniteService.findOne(newArticle.uniteId);
     article.reference = newArticle.reference;
     article.designation = newArticle.designation;
     article.qte_alert = newArticle.qte_alert;
     article.model = newArticle.model;
-    article.marque = newArticle.marque;
-    return this.articleRep.save(article);
+    article.marque = newArticle.marque;*/
+    return this.articleRep.save(newArticle);
   }
   /*
   async create(createArticleDto: CreateArticleDto) {
@@ -114,15 +114,16 @@ export class ArticlesService {
 
   // update article
   async update(id: number, newArticle: UpdateArticleDto) {
-    const article: Article = await this.articleRep.create();
+    /*const article: Article = await this.articleRep.create();
     article.categorie = await this.catService.findOne(newArticle.categorieId);
     article.unite = await this.uniteService.findOne(newArticle.uniteId);
     article.reference = newArticle.reference;
     article.designation = newArticle.designation;
     article.qte_alert = newArticle.qte_alert;
     article.model = newArticle.model;
-    article.marque = newArticle.marque;
-    return this.articleRep.update(id, article);
+    article.marque = newArticle.marque;*/
+
+    return this.articleRep.update(id, newArticle);
   }
 
   //delete article using id

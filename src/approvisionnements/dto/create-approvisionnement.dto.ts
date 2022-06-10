@@ -6,7 +6,7 @@ export class EtatBesoinDto {
   demandeur: string;
 }
 
-export class EtatDemandeTarif {
+export class EtatDemandeTarif extends EtatBesoinDto {
   fournisseurId: number;
   qte_commande: number;
 }

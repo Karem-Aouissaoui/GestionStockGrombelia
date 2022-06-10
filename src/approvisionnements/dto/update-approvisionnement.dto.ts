@@ -1,6 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { EtatBesoinDto } from './create-approvisionnement.dto';
+import {
+  EtatBesoinDto,
+  EtatDemandeTarif,
+} from './create-approvisionnement.dto';
 
-export class UpdateApprovisionnementDto extends PartialType(EtatBesoinDto) {}
-
-export class updateEtatbesoin extends PartialType(EtatBesoinDto) {}
+export class UpdateApproDto extends PartialType(EtatDemandeTarif) {}

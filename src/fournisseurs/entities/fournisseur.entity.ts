@@ -19,16 +19,13 @@ export class Fournisseur {
   nomFournisseur: string;
 
   @Column()
-  reference: string;
+  code: string;
 
   @Column({ nullable: true })
   tel: string;
 
   @Column({ nullable: true })
   adresse: string;
-
-  @Column({ nullable: true })
-  remarque: string;
 
   @OneToMany((type) => Approvisionnement, (appro) => appro.fournisseur)
   appro: Approvisionnement[];
