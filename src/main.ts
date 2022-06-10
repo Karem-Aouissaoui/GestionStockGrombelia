@@ -5,9 +5,10 @@ import * as passport from 'passport';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api');
-  await app.listen(process.env.PORT || 3000);
+  app.enableCors();
+  await app.listen(parseInt(process.env.PORT) || 3000);
 }
 bootstrap();
