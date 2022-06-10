@@ -17,7 +17,10 @@ export const config: TypeOrmModuleOptions = {
   autoLoadEntities: true,
   subscribers: [StockSubscriber],
   url: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
+  ssl: true,
+  extra: {
+    ssl: { rejectUnauthorized: false },
+  },
 };
 //__dirname + './**/entities/*.entity{.ts,.js}'
 // __dirname + '/../**/*.entity{.ts,.js}' from nestjs official site
