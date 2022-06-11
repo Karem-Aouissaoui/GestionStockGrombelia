@@ -1,9 +1,12 @@
 import { realpath } from 'fs';
+import { Imputation } from 'src/approvisionnements/entities/imputation.entity';
 import { Article } from 'src/articles/entities/article.entity';
+import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -15,27 +18,21 @@ export class Commande {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany((type) => LigneCommande, (ligneCommande) => ligneCommande.commande)
-  lignecommandes: LigneCommande[];
+  @ManyToOne((type) => Fournisseur, (fournisseur) => fournisseur.commandes)
+  fournisseur: Fournisseur;
 
   @Column()
-  qte: number;
-
-  @Column()
-  date_livraison: Date;
+  date_commande: Date;
 
   @Column()
   date_reception: Date;
 
-  @Column({ type: 'real' })
-  montant_total: string;
-
   @Column()
-  etat: boolean;
+  reference: string;
 
-  @CreateDateColumn()
-  date_creation: String;
+  @ManyToOne((type) => Imputation, (imput) => imput.commandes)
+  imputation: Imputation;
 
-  @UpdateDateColumn()
-  date_modification: string;
+  @ManyToOne((type) => Article, (article) => article.commandes)
+  article: Article;
 }

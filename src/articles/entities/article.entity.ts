@@ -63,6 +63,8 @@ export class Article {
   @OneToMany((type) => Approvisionnement, (appro) => appro.article)
   approvisionnement: Approvisionnement[];
 
+  @OneToMany((type) => Commande, (commande) => commande.article)
+  commandes: Commande[];
   @CreateDateColumn()
   date_creation: string;
 

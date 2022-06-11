@@ -1,9 +1,12 @@
+import { Demandeur } from '../entities/demandeur.entity';
+import { Imputation } from '../entities/imputation.entity';
+
 export class EtatBesoinDto {
   reference: string;
   articleId: number;
   qte_demande: number;
-  imputation: string;
-  demandeur: string;
+  imputation: Imputation;
+  demandeur: Demandeur;
 }
 
 export class EtatDemandeTarif extends EtatBesoinDto {

@@ -1,3 +1,4 @@
+import { Commande } from 'src/commandes/entities/commande.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Approvisionnement } from './approvisionnement.entity';
 
@@ -14,4 +15,7 @@ export class Imputation {
 
   @OneToMany((type) => Approvisionnement, (appro) => appro.imputation)
   appro: Approvisionnement[];
+
+  @OneToMany((type) => Commande, (commande) => commande.imputation)
+  commandes: Commande[];
 }
