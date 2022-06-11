@@ -19,9 +19,10 @@ export class LigneCommande {
   @JoinColumn()
   article: Article;
 */
+  /*
   @ManyToOne((type) => Commande, (commande) => commande.lignecommandes)
   commande: Commande;
-
+*/
   @Column()
   qte: number;
 
