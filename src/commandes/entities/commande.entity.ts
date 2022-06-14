@@ -18,8 +18,14 @@ export class Commande {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne((type) => Fournisseur, (fournisseur) => fournisseur.commandes)
-  fournisseur: Fournisseur;
+  @Column()
+  reference: string;
+
+  @Column({ type: 'real' })
+  totalHt: string;
+
+  @Column({ type: 'real' })
+  totalTTc: string;
 
   @Column()
   date_commande: Date;
@@ -27,12 +33,17 @@ export class Commande {
   @Column()
   date_reception: Date;
 
-  @Column()
-  reference: string;
-
+  //relations:
+  /*
   @ManyToOne((type) => Imputation, (imput) => imput.commandes)
   imputation: Imputation;
 
   @ManyToOne((type) => Article, (article) => article.commandes)
   article: Article;
+  */
+  @ManyToOne((type) => Fournisseur, (fournisseur) => fournisseur.commandes)
+  fournisseur: Fournisseur;
+
+  @OneToMany((type) => LigneCommande, (ligneCommande) => ligneCommande.commande)
+  ligneCommandes: LigneCommande[];
 }

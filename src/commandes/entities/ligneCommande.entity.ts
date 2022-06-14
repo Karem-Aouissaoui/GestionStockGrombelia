@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { Article } from 'src/articles/entities/article.entity';
 import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
 import {
@@ -19,22 +20,29 @@ export class LigneCommande {
   @JoinColumn()
   article: Article;
 */
-  /*
-  @ManyToOne((type) => Commande, (commande) => commande.lignecommandes)
-  commande: Commande;
-*/
+
   @Column()
   qte: number;
 
   @Column({ type: 'real' })
   prixHT: string;
 
+  @Column({ default: 0 })
+  tva: number;
+
   @Column({ type: 'real' })
   prixTTC: string;
-
+  /*
   @Column({ type: 'real' })
   total: string;
-
+*/
   @Column()
   etat: boolean;
+
+  //relations
+  @ManyToOne((type) => Commande, (commande) => commande.ligneCommandes)
+  commande: Commande;
+
+  @ManyToOne((type) => Article, (article) => article.ligneCommandes)
+  article: Article;
 }

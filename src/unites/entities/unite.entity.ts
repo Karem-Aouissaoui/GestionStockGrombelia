@@ -12,6 +12,8 @@ export class Unite {
   @Column({ nullable: false })
   codeUnite: string;
 
+  //relations
+
   @OneToMany((type) => Article, (article) => article.unite)
   articles: Article[];
 }

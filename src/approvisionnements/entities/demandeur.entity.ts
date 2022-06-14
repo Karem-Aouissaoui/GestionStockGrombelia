@@ -12,6 +12,7 @@ export class Demandeur {
   nomDemandeur: string;
   @Column({ nullable: true })
   email: string;
+  //relations
 
   @OneToMany((type) => Approvisionnement, (appro) => appro.demandeur)
   appro: Approvisionnement[];

@@ -9,6 +9,8 @@ export class Categorie {
   @Column()
   nomCat: string;
 
+  //relations
+
   @OneToMany(() => Article, (article) => article.categorie)
   articles: Article[];
 }

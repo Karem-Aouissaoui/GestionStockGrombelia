@@ -13,7 +13,7 @@ export class UnitesService {
   }
 
   findAll() {
-    return this.uniteRep.find();
+    return this.uniteRep.find({ relations: ['articles'] });
   }
 
   findOne(id: number) {

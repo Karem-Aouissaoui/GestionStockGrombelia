@@ -22,7 +22,7 @@ export class ArticlesService {
     private uniteService: UnitesService,
     private stockService: StockService,
   ) {}
-
+  /*
   async create(newArticle: CreateArticleDto) {
     /*const article: Article = await this.articleRep.create();
     article.categorie = await this.catService.findOne(newArticle.categorieId);
@@ -31,10 +31,10 @@ export class ArticlesService {
     article.designation = newArticle.designation;
     article.qte_alert = newArticle.qte_alert;
     article.model = newArticle.model;
-    article.marque = newArticle.marque;*/
+    article.marque = newArticle.marque;
     return this.articleRep.save(newArticle);
   }
-  /*
+  
   async create(createArticleDto: CreateArticleDto) {
     if (createArticleDto.qte === undefined) {
       return this.articleRep.save(createArticleDto);
@@ -98,6 +98,12 @@ export class ArticlesService {
     return this.stockService.create(outStock);
   }
 */
+
+  //create new article
+  async create(newArticle: CreateArticleDto) {
+    return await this.articleRep.save(newArticle);
+  }
+
   //find all articles
   findAll(): Promise<Article[]> {
     return this.articleRep.find();

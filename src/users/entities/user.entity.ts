@@ -4,8 +4,10 @@ import {
   Column,
   Entity,
   Generated,
+  JoinColumn,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -19,15 +21,21 @@ export class User {
 
   @Column({ nullable: false })
   public password: string;
+
+  @Column({ nullable: false })
+  email: string;
+
+  @Column({ nullable: false, length: 8 })
+  tel: string;
   /*
   @Column({ name: 'reset_token', nullable: false })
   @Generated('uuid')
   public resetToken: string;
 */
 
-  @ManyToMany((type) => Role)
-  @JoinTable()
-  roles: Roles[];
+  @ManyToOne((type) => Role, (role) => role.users)
+  @JoinColumn()
+  role: Role;
 
   /*
   @Column({

@@ -22,7 +22,7 @@ export class ApprovisionnementsService {
 
   async createEtatBesoin(createApproDto: EtatBesoinDto) {
     //console.log(createApproDto);
-    const approDto: Approvisionnement = await this.approRep.create();
+    /*  const approDto: Approvisionnement = await this.approRep.create();
     approDto.reference = createApproDto.reference;
     approDto.article = await this.articleservice.findOne(
       createApproDto.articleId,
@@ -31,11 +31,11 @@ export class ApprovisionnementsService {
     approDto.imputation = createApproDto.imputation;
     approDto.demandeur = createApproDto.demandeur;
     console.log(approDto);
-    return this.approRep.save(approDto);
+    return this.approRep.save(approDto);*/
   }
 
   async updateEtatbesoin(id, updateEtatbesoin) {
-    return this.approRep.update(id, updateEtatbesoin);
+    //return this.approRep.update(id, updateEtatbesoin);
   }
 
   findAll() {

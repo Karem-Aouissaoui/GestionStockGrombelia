@@ -13,6 +13,8 @@ export class Depot {
   @Column({ nullable: true })
   description: string;
 
+  //relations
+
   @OneToMany((type) => Stock, (stock) => stock.depot)
   stocks: Stock[];
 }

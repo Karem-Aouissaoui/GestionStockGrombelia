@@ -19,7 +19,8 @@ export class CategorieService {
   }
 
   findAll() {
-    return this.catRep.find({ where: { categorie: 'article.id' } });
+    //return this.catRep.find({ where: { categorie: 'article.id' } });
+    return this.catRep.find({ relations: ['articles'] });
   }
 
   async findOne(id: number) {

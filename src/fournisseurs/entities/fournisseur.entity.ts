@@ -28,9 +28,11 @@ export class Fournisseur {
   @Column({ nullable: true })
   adresse: string;
 
+  //relations
+  /*
   @OneToMany((type) => Approvisionnement, (appro) => appro.fournisseur)
   appro: Approvisionnement[];
-
+*/
   @OneToMany((type) => Commande, (commande) => commande.fournisseur)
   commandes: Commande[];
 }

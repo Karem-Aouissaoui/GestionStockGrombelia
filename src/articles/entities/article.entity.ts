@@ -1,4 +1,5 @@
 import { Approvisionnement } from 'src/approvisionnements/entities/approvisionnement.entity';
+import { LigneAppro } from 'src/approvisionnements/entities/ligneAppro.entity';
 import { Categorie } from 'src/categorie/entities/categorie.entity';
 import { Commande } from 'src/commandes/entities/commande.entity';
 import { LigneCommande } from 'src/commandes/entities/ligneCommande.entity';
@@ -45,6 +46,13 @@ export class Article {
   @Column({ nullable: true })
   marque: string;
 
+  @CreateDateColumn()
+  date_creation: string;
+
+  @UpdateDateColumn()
+  date_modification: string;
+
+  // relations:
   @ManyToOne((type) => Unite, (unite) => unite.articles, {
     cascade: ['insert'],
   })
@@ -60,14 +68,9 @@ export class Article {
   @OneToMany((type) => Stock, (stock) => stock.article)
   stocks: Stock[];
 
-  @OneToMany((type) => Approvisionnement, (appro) => appro.article)
-  approvisionnement: Approvisionnement[];
+  @OneToMany((type) => LigneCommande, (ligneCommande) => ligneCommande.article)
+  ligneCommandes: LigneCommande[];
 
-  @OneToMany((type) => Commande, (commande) => commande.article)
-  commandes: Commande[];
-  @CreateDateColumn()
-  date_creation: string;
-
-  @UpdateDateColumn()
-  date_modification: string;
+  @OneToMany((type) => LigneAppro, (ligneAppro) => ligneAppro.article)
+  ligneAppros: LigneAppro[];
 }

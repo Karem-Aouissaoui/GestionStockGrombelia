@@ -13,9 +13,12 @@ export class Imputation {
   @Column()
   nomImputation: string;
 
+  //relations
+
   @OneToMany((type) => Approvisionnement, (appro) => appro.imputation)
   appro: Approvisionnement[];
-
+  /*
   @OneToMany((type) => Commande, (commande) => commande.imputation)
   commandes: Commande[];
+*/
 }

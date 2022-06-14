@@ -15,6 +15,7 @@ import {
 } from 'typeorm';
 import { Demandeur } from './demandeur.entity';
 import { Imputation } from './imputation.entity';
+import { LigneAppro } from './ligneAppro.entity';
 
 @Entity()
 export class Approvisionnement {
@@ -24,35 +25,33 @@ export class Approvisionnement {
   @Column({ nullable: true })
   reference: string;
 
+  @Column({ default: 'false' })
+  etat: boolean;
+
+  @CreateDateColumn()
+  date_creation: string;
+  /*
   @ManyToOne((type) => Article, (article) => article.approvisionnement)
   @JoinColumn()
   article: Article;
 
-  @Column({ nullable: true })
-  qte_demande: number;
+  
+  
+  @ManyToOne((type) => Fournisseur, (fournisseur) => fournisseur.appro)
+  fournisseur: Fournisseur;
 
-  @Column({ nullable: true })
-  qte_commande: number;
+
+  */
+  //relations
+  @OneToMany((type) => LigneAppro, (ligneAppro) => ligneAppro.appro)
+  ligneAppros: LigneAppro[];
 
   @ManyToOne((type) => Imputation, (imputation) => imputation.appro, {
     cascade: ['insert'],
   })
   imputation: Imputation;
-
   @ManyToOne((type) => Demandeur, (demandeur) => demandeur.appro, {
     cascade: ['insert'],
   })
   demandeur: Demandeur;
-
-  @Column({ default: 'false' })
-  valide: boolean;
-
-  @ManyToOne((type) => Fournisseur, (fournisseur) => fournisseur.appro)
-  fournisseur: Fournisseur;
-
-  @Column({ nullable: true })
-  description: string;
-
-  @CreateDateColumn()
-  date_creation: string;
 }
