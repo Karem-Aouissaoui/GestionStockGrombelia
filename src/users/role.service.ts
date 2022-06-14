@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRoleDto } from './dto/create-role.dto';
+import { UpdateRoleDto } from './dto/update-role.dto';
 import { Role } from './entities/role.entity';
 
 @Injectable()
@@ -12,11 +13,35 @@ export class RoleService {
   ) {}
 
   private readonly roles = [
-    { name: 'WEBMASTER' },
-    { name: 'ADMIN' },
-    { name: 'MAGASINIER' },
-    { name: 'RFINANCIER' },
+    { nomRole: 'WEBMASTER' },
+    { nomRole: 'ADMIN' },
+    { nomRole: 'MAGASINIER' },
+    { nomRole: 'RFINANCIER' },
+    { nomRole: 'MEMBRE' },
   ];
+
+  //create new role
+  async create(newRole: CreateRoleDto) {
+    return await this.roleRepository.save(newRole);
+  }
+
+  //findALL roles
+  async findAll() {
+    return await this.roleRepository.find({ relations: ['users'] });
+  }
+
+  async findById(id: number) {
+    return await this.roleRepository.findOne(id);
+  }
+
+  async update(id: number, updateRole: UpdateRoleDto) {
+    return await this.update(id, updateRole);
+  }
+
+  async remove(id: number) {
+    return await this.roleRepository.delete(id);
+  }
+
   //Array<Promise<Role>>
   async createInit() {
     console.log('exec');

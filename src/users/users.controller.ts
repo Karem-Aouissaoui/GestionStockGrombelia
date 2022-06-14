@@ -24,15 +24,20 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
-  /*
+
   @Get(':id')
   findById(@Param('id') id: string) {
     return this.usersService.findById(+id);
-  }*/
+  }
 
-  @Get(':username')
-  findOne(@Param('username') username: string) {
+  @Get('username/:username')
+  findByUsername(@Param('username') username: string) {
     return this.usersService.findByUsername(username);
+  }
+
+  @Get('email/:email')
+  findByEmail(@Param('email') email: string) {
+    return this.usersService.findByEmail(email);
   }
 
   @Patch(':id')

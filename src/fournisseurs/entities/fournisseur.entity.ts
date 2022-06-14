@@ -19,9 +19,6 @@ export class Fournisseur {
   @Column({ nullable: false })
   nomFournisseur: string;
 
-  @Column()
-  code: string;
-
   @Column({ nullable: true })
   tel: string;
 

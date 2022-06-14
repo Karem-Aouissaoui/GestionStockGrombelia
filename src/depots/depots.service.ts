@@ -15,12 +15,11 @@ export class DepotsService {
   ) {}
 
   async create(createDepotDto: CreateDepotDto) {
-    const depot: Depot = await this.depotRep.save(createDepotDto);
-    console.log(depot);
+    return this.depotRep.save(createDepotDto);
   }
 
   findAll() {
-    return this.depotRep.find({ relations: ['articles'] });
+    return this.depotRep.find({ relations: ['stocks'] });
   }
 
   findOne(id: number) {

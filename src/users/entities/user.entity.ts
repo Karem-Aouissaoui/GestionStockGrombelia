@@ -16,27 +16,28 @@ import { Role } from './role.entity';
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column({ nullable: false, unique: true })
   public username: string;
 
   @Column({ nullable: false })
   public password: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, unique: true })
   email: string;
 
-  @Column({ nullable: false, length: 8 })
+  @Column({ nullable: true, length: 8 })
   tel: string;
-  /*
-  @Column({ name: 'reset_token', nullable: false })
-  @Generated('uuid')
-  public resetToken: string;
-*/
 
   @ManyToOne((type) => Role, (role) => role.users)
   @JoinColumn()
   role: Role;
 
+  /*
+  @Column({ name: 'reset_token', nullable: false })
+  @Generated('uuid')
+  public resetToken: string;
+*/
   /*
   @Column({
     name: 'reset_token_expiration',

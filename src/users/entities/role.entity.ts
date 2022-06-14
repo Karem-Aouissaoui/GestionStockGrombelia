@@ -12,8 +12,9 @@ import { User } from './user.entity';
 export class Role {
   @PrimaryGeneratedColumn()
   id: number;
+
   @Column({ nullable: false, unique: true })
-  public name: string;
+  public nomRole: string;
 
   //relations
   @OneToMany((type) => User, (user) => user.role)

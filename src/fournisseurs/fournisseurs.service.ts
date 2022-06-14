@@ -15,7 +15,7 @@ export class FournisseursService {
   }
 
   findAll() {
-    return this.fourRep.find();
+    return this.fourRep.find({ relations: ['commandes'] });
   }
 
   findOne(id: number) {

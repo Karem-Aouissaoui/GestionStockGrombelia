@@ -16,19 +16,6 @@ export class UsersService {
     private readonly roleRepository: Repository<Role>,
   ) {}
 
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
-
   //for users array
   /*
   async findOne(username: string): Promise<any | undefined> {
@@ -37,26 +24,10 @@ export class UsersService {
 
   //find all users
   async findAll() {
-    const users: User[] = await this.usersRepository.find({
-      relations: ['roles'],
-    });
-    console.log(users);
-    return users;
-  }
-  //for database
-  public async findByUsername(username: string): Promise<User | undefined> {
-    return (
-      await this.usersRepository.find({
-        relations: ['roles'],
-        where: { username: username },
-        take: 1,
-      })
-    )[0];
+    return await this.usersRepository.find({ relations: ['role'] });
   }
 
-  public async findById(id: number): Promise<User | undefined> {
-    return this.usersRepository.findOne(id);
-  }
+  //for database
 
   async create(createUserDto: any) {
     const password = encodePassword(createUserDto.password);
@@ -66,11 +37,31 @@ export class UsersService {
     return this.usersRepository.save(createUserDto);
   }
 
-  register(createUserDto: any) {
-    return this.usersRepository.save(createUserDto);
+  public async findById(id: number): Promise<User | undefined> {
+    return this.usersRepository.findOne(id);
   }
 
-  update(id: number, updateUserDto: any) {
+  public async findByUsername(username: string): Promise<User | undefined> {
+    return (
+      await this.usersRepository.find({
+        relations: ['role'],
+        where: { username: username },
+        take: 1,
+      })
+    )[0];
+  }
+
+  async findByEmail(email: string): Promise<User | undefined> {
+    return (
+      await this.usersRepository.find({
+        relations: ['role'],
+        where: { email: email },
+        take: 1,
+      })
+    )[0];
+  }
+
+  update(id: number, updateUserDto: UpdateUserDto) {
     return this.usersRepository.update(id, updateUserDto);
   }
 
