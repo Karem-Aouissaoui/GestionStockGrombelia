@@ -8,7 +8,6 @@ export class LigneAppro {
   id: number;
   @Column()
   qte_demande: number;
-
   @ManyToOne((type) => Article, (article) => article.ligneAppros)
   article: Article;
   @ManyToOne((type) => Approvisionnement, (appro) => appro.ligneAppros)

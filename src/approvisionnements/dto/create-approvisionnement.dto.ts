@@ -1,15 +1,11 @@
 import { Demandeur } from '../entities/demandeur.entity';
 import { Imputation } from '../entities/imputation.entity';
+import { LigneAppro } from '../entities/ligneAppro.entity';
 
-export class EtatBesoinDto {
+export class CreateApproDTO {
   reference: string;
-  articleId: number;
-  qte_demande: number;
-  //imputation: Imputation;
-  //demandeur: Demandeur;
-}
-
-export class EtatDemandeTarif extends EtatBesoinDto {
-  fournisseurId: number;
-  qte_commande: number;
+  etat: boolean;
+  imputation: Imputation;
+  demandeur: Demandeur;
+  ligneAppros: LigneAppro[];
 }

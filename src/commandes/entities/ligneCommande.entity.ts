@@ -18,11 +18,6 @@ import { Commande } from './commande.entity';
 export class LigneCommande {
   @PrimaryGeneratedColumn()
   id: number;
-  /*
-  @OneToOne((type) => Article, (article) => article.lignecommande)
-  @JoinColumn()
-  article: Article;
-*/
 
   @Column()
   qte: number;
@@ -49,11 +44,12 @@ export class LigneCommande {
   @ManyToOne((type) => Commande, (commande) => commande.ligneCommandes)
   commande: Commande;
 
-  @ManyToOne((type) => Article, (article) => article.ligneCommandes)
+  @ManyToOne((type) => Article, (article) => article.ligneCommandes, {
+    onDelete: 'CASCADE',
+  })
   article: Article;
 
   @BeforeInsert()
-  @AfterInsert()
   calcul() {
     this.totalPrixHT = (parseFloat(this.prixUnitaireHt) * this.qte).toString();
     console.log(this.totalPrixHT);

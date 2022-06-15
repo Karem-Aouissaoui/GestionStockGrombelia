@@ -8,10 +8,10 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApprovisionnementsService } from './approvisionnements.service';
-import { EtatBesoinDto } from './dto/create-approvisionnement.dto';
+import { CreateApproDTO } from './dto/create-approvisionnement.dto';
 import { UpdateApproDto } from './dto/update-approvisionnement.dto';
 
-@Controller('appro')
+@Controller('appros')
 export class ApprovisionnementsController {
   constructor(
     private readonly approvisionnementsService: ApprovisionnementsService,
@@ -19,25 +19,23 @@ export class ApprovisionnementsController {
 
   //section etat de besoin
   @Post()
-  create(@Body() createApprovisionnementDto: EtatBesoinDto) {
-    return this.approvisionnementsService.createEtatBesoin(
-      createApprovisionnementDto,
-    );
+  create(@Body() createApproDto: CreateApproDTO) {
+    return this.approvisionnementsService.create(createApproDto);
   }
 
-  @Get('etatbesoin/all')
+  @Get('all')
   findAll() {
     return this.approvisionnementsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.approvisionnementsService.findOne(+id);
+    return this.approvisionnementsService.findById(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEtatbesoin: UpdateApproDto) {
-    return this.approvisionnementsService.update(+id, updateEtatbesoin);
+  update(@Param('id') id: string, @Body() updateApproDto: UpdateApproDto) {
+    return this.approvisionnementsService.update(+id, updateApproDto);
   }
 
   @Delete(':id')

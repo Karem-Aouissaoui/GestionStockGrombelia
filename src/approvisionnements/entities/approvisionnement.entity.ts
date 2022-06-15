@@ -30,28 +30,22 @@ export class Approvisionnement {
 
   @CreateDateColumn()
   date_creation: string;
-  /*
-  @ManyToOne((type) => Article, (article) => article.approvisionnement)
-  @JoinColumn()
-  article: Article;
 
-  
-  
-  @ManyToOne((type) => Fournisseur, (fournisseur) => fournisseur.appro)
-  fournisseur: Fournisseur;
-
-
-  */
   //relations
-  @OneToMany((type) => LigneAppro, (ligneAppro) => ligneAppro.appro)
+  @OneToMany((type) => LigneAppro, (ligneAppro) => ligneAppro.appro, {
+    onDelete: 'CASCADE',
+    cascade: ['insert'],
+  })
   ligneAppros: LigneAppro[];
 
   @ManyToOne((type) => Imputation, (imputation) => imputation.appro, {
     cascade: ['insert'],
+    onDelete: 'CASCADE',
   })
   imputation: Imputation;
   @ManyToOne((type) => Demandeur, (demandeur) => demandeur.appro, {
     cascade: ['insert'],
+    onDelete: 'CASCADE',
   })
   demandeur: Demandeur;
 }
