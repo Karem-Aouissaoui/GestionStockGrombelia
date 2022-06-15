@@ -1,12 +1,13 @@
 import { Imputation } from 'src/approvisionnements/entities/imputation.entity';
 import { Article } from 'src/articles/entities/article.entity';
 import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
+import { LigneCommande } from '../entities/ligneCommande.entity';
 
 export class CreateCommandeDto {
-  fournisseur: Fournisseur;
+  reference: string;
   date_commande: Date;
   date_reception: Date;
-  reference: string;
-  imputation: Imputation;
-  article: Article;
+  etat: boolean;
+  fournisseur: Fournisseur;
+  ligneCommandes: LigneCommande[];
 }

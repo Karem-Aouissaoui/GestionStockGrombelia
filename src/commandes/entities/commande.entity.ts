@@ -3,6 +3,9 @@ import { Imputation } from 'src/approvisionnements/entities/imputation.entity';
 import { Article } from 'src/articles/entities/article.entity';
 import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
 import {
+  AfterInsert,
+  AfterLoad,
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -21,29 +24,46 @@ export class Commande {
   @Column()
   reference: string;
 
-  @Column({ type: 'real' })
+  @Column({ type: 'real', nullable: true })
   totalHt: string;
 
-  @Column({ type: 'real' })
+  @Column({ type: 'real', nullable: true })
   totalTTc: string;
 
-  @Column()
+  @Column({ default: new Date() })
   date_commande: Date;
 
-  @Column()
+  @Column({ nullable: true })
   date_reception: Date;
 
-  //relations:
-  /*
-  @ManyToOne((type) => Imputation, (imput) => imput.commandes)
-  imputation: Imputation;
+  @Column({ default: 'false', nullable: true })
+  etat: boolean;
 
-  @ManyToOne((type) => Article, (article) => article.commandes)
-  article: Article;
-  */
-  @ManyToOne((type) => Fournisseur, (fournisseur) => fournisseur.commandes)
+  //relations:
+  @ManyToOne((type) => Fournisseur, (fournisseur) => fournisseur.commandes, {
+    onDelete: 'CASCADE',
+  })
   fournisseur: Fournisseur;
 
-  @OneToMany((type) => LigneCommande, (ligneCommande) => ligneCommande.commande)
+  @OneToMany(
+    (type) => LigneCommande,
+    (ligneCommande) => ligneCommande.commande,
+    { cascade: ['insert'], onDelete: 'CASCADE' },
+  )
   ligneCommandes: LigneCommande[];
+
+  @AfterLoad()
+  calcul() {
+    console.log('after load');
+    console.log(this);
+
+    /*
+    this.totalHt = this.ligneCommandes
+      .reduce((a, b) => a + parseFloat(b.totalPrixHT), 0)
+      .toString();
+    this.totalTTc = this.ligneCommandes
+      .reduce((a, b) => a + parseFloat(b.totalPrixTTC), 0)
+      .toString();
+      */
+  }
 }

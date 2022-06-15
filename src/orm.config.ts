@@ -1,6 +1,8 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { Article } from './articles/entities/article.entity';
 import { Categorie } from './categorie/entities/categorie.entity';
+import { Commande } from './commandes/entities/commande.entity';
+import { LigneCommande } from './commandes/entities/ligneCommande.entity';
 import { Depot } from './depots/entities/depot.entity';
 import { Fournisseur } from './fournisseurs/entities/fournisseur.entity';
 import { Stock } from './stock/entities/stock.entity';

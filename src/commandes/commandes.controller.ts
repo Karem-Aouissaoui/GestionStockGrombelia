@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CommandesService } from './commandes.service';
 import { CreateCommandeDto } from './dto/create-commande.dto';
 import { UpdateCommandeDto } from './dto/update-commande.dto';
@@ -12,7 +20,7 @@ export class CommandesController {
     return this.commandesService.create(createCommandeDto);
   }
 
-  @Get()
+  @Get('all')
   findAll() {
     return this.commandesService.findAll();
   }
@@ -23,7 +31,10 @@ export class CommandesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCommandeDto: UpdateCommandeDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCommandeDto: UpdateCommandeDto,
+  ) {
     return this.commandesService.update(+id, updateCommandeDto);
   }
 
