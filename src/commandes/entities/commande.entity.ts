@@ -1,4 +1,5 @@
 import { realpath } from 'fs';
+import { now } from 'lodash';
 import { Imputation } from 'src/approvisionnements/entities/imputation.entity';
 import { Article } from 'src/articles/entities/article.entity';
 import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
@@ -30,7 +31,7 @@ export class Commande {
   @Column({ type: 'real', nullable: true })
   totalTTc: string;
 
-  @Column({ default: new Date() })
+  @Column({ nullable: true })
   date_commande: Date;
 
   @Column({ nullable: true })
@@ -48,11 +49,10 @@ export class Commande {
   @OneToMany(
     (type) => LigneCommande,
     (ligneCommande) => ligneCommande.commande,
-    { cascade: ['insert'], onDelete: 'CASCADE' },
+    { cascade: ['insert', 'update'], onDelete: 'CASCADE' },
   )
   ligneCommandes: LigneCommande[];
 
-  @AfterLoad()
   calcul() {
     console.log('after load');
     console.log(this);

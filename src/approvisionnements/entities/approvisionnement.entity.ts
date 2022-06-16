@@ -1,3 +1,4 @@
+import { now } from 'lodash';
 import { Article } from 'src/articles/entities/article.entity';
 import { Fournisseur } from 'src/fournisseurs/entities/fournisseur.entity';
 import { User } from 'src/users/entities/user.entity';
@@ -28,7 +29,7 @@ export class Approvisionnement {
   @Column({ default: 'false' })
   etat: boolean;
 
-  @CreateDateColumn()
+  @Column({ nullable: true })
   date_creation: string;
 
   //relations
@@ -38,11 +39,6 @@ export class Approvisionnement {
   })
   ligneAppros: LigneAppro[];
 
-  @ManyToOne((type) => Imputation, (imputation) => imputation.appro, {
-    cascade: ['insert'],
-    onDelete: 'CASCADE',
-  })
-  imputation: Imputation;
   @ManyToOne((type) => Demandeur, (demandeur) => demandeur.appro, {
     cascade: ['insert'],
     onDelete: 'CASCADE',

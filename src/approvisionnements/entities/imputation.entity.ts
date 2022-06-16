@@ -1,6 +1,7 @@
 import { Commande } from 'src/commandes/entities/commande.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Approvisionnement } from './approvisionnement.entity';
+import { LigneAppro } from './ligneAppro.entity';
 
 @Entity()
 export class Imputation {
@@ -15,10 +16,6 @@ export class Imputation {
 
   //relations
 
-  @OneToMany((type) => Approvisionnement, (appro) => appro.imputation)
-  appro: Approvisionnement[];
-  /*
-  @OneToMany((type) => Commande, (commande) => commande.imputation)
-  commandes: Commande[];
-*/
+  @OneToMany((type) => LigneAppro, (appro) => appro.imputation)
+  ligneAppros: LigneAppro[];
 }

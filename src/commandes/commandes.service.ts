@@ -4,6 +4,7 @@ import { getRepository, Repository } from 'typeorm';
 import { CreateCommandeDto } from './dto/create-commande.dto';
 import { UpdateCommandeDto } from './dto/update-commande.dto';
 import { Commande } from './entities/commande.entity';
+import { LigneCommande } from './entities/ligneCommande.entity';
 
 @Injectable()
 export class CommandesService {
@@ -32,7 +33,10 @@ export class CommandesService {
   }
 
   update(id: number, updateCommandeDto: UpdateCommandeDto) {
-    return this.commandeRep.update(id, updateCommandeDto);
+    const { ligneCommandes, ...rest } = updateCommandeDto;
+    ligneCommandes.forEach((ligne) => getRepository(LigneCommande).save(ligne));
+
+    return this.commandeRep.update(id, rest);
   }
 
   remove(id: number) {

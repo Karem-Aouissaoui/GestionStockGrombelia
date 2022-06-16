@@ -52,7 +52,6 @@ export class LigneCommande {
   @BeforeInsert()
   calcul() {
     this.totalPrixHT = (parseFloat(this.prixUnitaireHt) * this.qte).toString();
-    console.log(this.totalPrixHT);
 
     this.totalPrixTTC = (
       (parseFloat(this.totalPrixHT) * this.tva) / 100 +

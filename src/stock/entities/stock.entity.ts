@@ -20,12 +20,12 @@ export class Stock {
 
   @Column()
   qtemvm: number;
-
-  @CreateDateColumn()
-  datemvm: Date;
-
+  /*
   @Column({ enum: ['E', 'S'] })
   mouvement: string;
+*/
+  @Column({ nullable: true })
+  datemvm: Date;
 
   //relations
 
@@ -36,18 +36,4 @@ export class Stock {
     onDelete: 'CASCADE',
   })
   article: Article;
-
-  //subscribers
-  @BeforeInsert()
-  test() {
-    console.log('before test');
-  }
-
-  @AfterInsert()
-  alertfunc() {
-    /*if (this.article.qte < this.article.qte_alert) {
-      console.log('alert!!!!!!!!!!!!!!!!');
-    }*/
-    console.log('listener test');
-  }
 }

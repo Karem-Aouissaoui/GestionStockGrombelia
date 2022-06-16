@@ -1,3 +1,4 @@
+import { sum } from 'lodash';
 import { Approvisionnement } from 'src/approvisionnements/entities/approvisionnement.entity';
 import { LigneAppro } from 'src/approvisionnements/entities/ligneAppro.entity';
 import { Categorie } from 'src/categorie/entities/categorie.entity';
@@ -9,6 +10,8 @@ import { Stock } from 'src/stock/entities/stock.entity';
 import { Unite } from 'src/unites/entities/unite.entity';
 import {
   AfterInsert,
+  AfterUpdate,
+  BeforeUpdate,
   Column,
   ColumnTypeUndefinedError,
   CreateDateColumn,
@@ -33,6 +36,9 @@ export class Article {
 
   @Column()
   designation: string;
+
+  @Column({ default: 0 })
+  qte_stock: number;
 
   @Column({ default: 10 })
   qte_alert: number;
@@ -65,7 +71,11 @@ export class Article {
   })
   categorie: Categorie;
 
-  @OneToMany((type) => Stock, (stock) => stock.article)
+  @OneToMany((type) => Stock, (stock) => stock.article, {
+    onDelete: 'CASCADE',
+    eager: true,
+    cascade: ['insert'],
+  })
   stocks: Stock[];
 
   @OneToMany((type) => LigneCommande, (ligneCommande) => ligneCommande.article)

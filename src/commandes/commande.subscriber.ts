@@ -1,5 +1,12 @@
-import { EntitySubscriberInterface, EventSubscriber, LoadEvent } from 'typeorm';
+import {
+  EntitySubscriberInterface,
+  EventSubscriber,
+  getRepository,
+  LoadEvent,
+  UpdateEvent,
+} from 'typeorm';
 import { Commande } from './entities/commande.entity';
+import { LigneCommande } from './entities/ligneCommande.entity';
 
 @EventSubscriber()
 export class CommandeSubscriber implements EntitySubscriberInterface<Commande> {
@@ -10,7 +17,13 @@ export class CommandeSubscriber implements EntitySubscriberInterface<Commande> {
     return Commande;
   }
 
-  /*async afterLoad(entity: Commande, event?: LoadEvent<Commande>): void | Promise<any> {
-      
-  }*/
+  async afterUpdate(event: UpdateEvent<Commande>) {
+    const commande = await getRepository(Commande).findOne(event.entity.id, {
+      relations: ['ligneCommandes'],
+    });
+    console.log(commande);
+
+    let recept = commande.ligneCommandes.filter((a) => a.etat == true);
+    console.log(recept);
+  }
 }
