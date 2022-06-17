@@ -11,6 +11,8 @@ export class Categorie {
 
   //relations
 
-  @OneToMany(() => Article, (article) => article.categorie)
+  @OneToMany(() => Article, (article) => article.categorie, {
+    onDelete: 'CASCADE',
+  })
   articles: Article[];
 }
