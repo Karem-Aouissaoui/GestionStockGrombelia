@@ -61,6 +61,7 @@ export class Article {
   // relations:
   @ManyToOne((type) => Unite, (unite) => unite.articles, {
     cascade: ['insert'],
+    eager: true,
   })
   @JoinColumn()
   unite: Unite;
