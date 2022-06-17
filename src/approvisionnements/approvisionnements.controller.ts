@@ -42,4 +42,11 @@ export class ApprovisionnementsController {
   remove(@Param('id') id: string) {
     return this.approvisionnementsService.remove(+id);
   }
+
+  //demandeur
+
+  @Get('demandeur/all')
+  findAllDemandeur() {
+    return this.approvisionnementsService.findAllDemandeur();
+  }
 }

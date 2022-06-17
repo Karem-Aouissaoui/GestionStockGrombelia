@@ -43,4 +43,23 @@ export class ApprovisionnementsService {
   remove(id: number) {
     return this.approRep.delete(id);
   }
+
+  //demandeur
+  findAllDemandeur() {
+    return this.demandRep.find({ relations: ['appros'] });
+  }
+
+  findDemandeurById(id: number) {
+    return this.demandRep.findOne(id, { relations: ['appros'] });
+  }
+
+  //imputation
+
+  findAllImputation() {
+    return this.imputRep.find({ relations: ['appros'] });
+  }
+
+  findImputationById(id: number) {
+    return this.imputRep.findOne(id, { relations: ['appros'] });
+  }
 }
