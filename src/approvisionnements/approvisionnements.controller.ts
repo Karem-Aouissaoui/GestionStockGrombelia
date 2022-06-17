@@ -49,4 +49,20 @@ export class ApprovisionnementsController {
   findAllDemandeur() {
     return this.approvisionnementsService.findAllDemandeur();
   }
+
+  @Get('demandeur/:id')
+  findDemandeurById(@Param('id') id: string) {
+    return this.approvisionnementsService.findDemandeurById(+id);
+  }
+
+  //imputation
+  @Get('imputation/all')
+  findAllImputation() {
+    return this.approvisionnementsService.findAllImputation();
+  }
+
+  @Get('imputation/:id')
+  findImputationById(@Param('id') id: string) {
+    return this.approvisionnementsService.findImputationById(+id);
+  }
 }
