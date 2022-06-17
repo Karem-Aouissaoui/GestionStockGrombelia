@@ -14,6 +14,8 @@ export class Unite {
 
   //relations
 
-  @OneToMany((type) => Article, (article) => article.unite)
+  @OneToMany((type) => Article, (article) => article.unite, {
+    onDelete: 'CASCADE',
+  })
   articles: Article[];
 }
