@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { getRepository, Repository } from 'typeorm';
 import { CreateCommandeDto } from './dto/create-commande.dto';
 import { UpdateCommandeDto } from './dto/update-commande.dto';
+import { UpdateLigneCommandeDTO } from './dto/update-ligneCommande.dto';
 import { Commande } from './entities/commande.entity';
 import { LigneCommande } from './entities/ligneCommande.entity';
 
@@ -15,6 +16,7 @@ export class CommandesService {
   async create(createCommandeDto: CreateCommandeDto) {
     const commande: Commande = await this.commandeRep.create(createCommandeDto);
     const result = await this.commandeRep.save(commande);
+    result.ligneCommandes.forEach((a) => a.calcul());
     result.totalHt = commande.ligneCommandes
       .reduce((a, b) => a + parseFloat(b.totalPrixHT), 0)
       .toString();
@@ -33,13 +35,14 @@ export class CommandesService {
   }
 
   update(id: number, updateCommandeDto: UpdateCommandeDto) {
-    const { ligneCommandes, ...rest } = updateCommandeDto;
-    ligneCommandes.forEach((ligne) => getRepository(LigneCommande).save(ligne));
-
-    return this.commandeRep.update(id, rest);
+    return this.commandeRep.save({ id, updateCommandeDto });
   }
 
   remove(id: number) {
     return this.commandeRep.delete(id);
+  }
+
+  updateLigne(id: number, updateLigne: UpdateLigneCommandeDTO) {
+    return getRepository(LigneCommande).update(id, updateLigne);
   }
 }

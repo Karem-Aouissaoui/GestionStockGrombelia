@@ -17,6 +17,7 @@ import { ApprovisionnementsModule } from './approvisionnements/approvisionnement
 import { UnitesModule } from './unites/unites.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailingModule } from './mailing/mailing.module';
+import { AlertsModule } from './alerts/alerts.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
@@ -31,6 +32,7 @@ import { MailingModule } from './mailing/mailing.module';
     ApprovisionnementsModule,
     UnitesModule,
     MailingModule,
+    AlertsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

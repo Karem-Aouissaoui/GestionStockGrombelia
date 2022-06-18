@@ -15,5 +15,5 @@ export class Demandeur {
   //relations
 
   @OneToMany((type) => Approvisionnement, (appro) => appro.demandeur)
-  appro: Approvisionnement[];
+  appros: Approvisionnement[];
 }

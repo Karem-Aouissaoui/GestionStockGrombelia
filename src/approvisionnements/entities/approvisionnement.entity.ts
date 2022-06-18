@@ -39,7 +39,7 @@ export class Approvisionnement {
   })
   ligneAppros: LigneAppro[];
 
-  @ManyToOne((type) => Demandeur, (demandeur) => demandeur.appro, {
+  @ManyToOne((type) => Demandeur, (demandeur) => demandeur.appros, {
     cascade: ['insert'],
     onDelete: 'CASCADE',
   })

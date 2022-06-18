@@ -56,10 +56,10 @@ export class ApprovisionnementsService {
   //imputation
 
   findAllImputation() {
-    return this.imputRep.find({ relations: ['appros'] });
+    return this.imputRep.find({ relations: ['ligneAppros'] });
   }
 
   findImputationById(id: number) {
-    return this.imputRep.findOne(id, { relations: ['appros'] });
+    return this.imputRep.findOne(id, { relations: ['ligneAppros'] });
   }
 }

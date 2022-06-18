@@ -5,6 +5,7 @@ import {
   AfterInsert,
   AfterLoad,
   BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   JoinColumn,
@@ -12,6 +13,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { CreateLigneCommandeDTO } from '../dto/ligneCommande.dto';
 import { Commande } from './commande.entity';
 
 @Entity()
@@ -49,13 +51,19 @@ export class LigneCommande {
   })
   article: Article;
 
-  @BeforeInsert()
   calcul() {
     this.totalPrixHT = (parseFloat(this.prixUnitaireHt) * this.qte).toString();
-
     this.totalPrixTTC = (
       (parseFloat(this.totalPrixHT) * this.tva) / 100 +
       parseFloat(this.totalPrixHT)
     ).toString();
+  }
+
+  ligneToStock() {
+    return {
+      article: this.article,
+      qtemvm: this.qte,
+      datemvm: this.commande.date_reception,
+    };
   }
 }
