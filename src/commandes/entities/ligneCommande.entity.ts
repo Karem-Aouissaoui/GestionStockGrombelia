@@ -24,6 +24,12 @@ export class LigneCommande {
   @Column()
   qte: number;
 
+  @Column({ nullable: true })
+  qte_recept: number;
+
+  @Column({ nullable: true })
+  quality: string;
+
   @Column({ type: 'real' })
   prixUnitaireHt: string;
 
@@ -35,12 +41,9 @@ export class LigneCommande {
 
   @Column({ type: 'real', nullable: true })
   totalPrixTTC: string;
-  /*
-  @Column({ type: 'real' })
-  total: string;
-*/
+
   @Column({ nullable: true })
-  etat: boolean;
+  reception: boolean;
 
   //relations
   @ManyToOne((type) => Commande, (commande) => commande.ligneCommandes)
@@ -59,11 +62,15 @@ export class LigneCommande {
     ).toString();
   }
 
-  ligneToStock() {
+  toStock() {
     return {
       article: this.article,
       qtemvm: this.qte,
       datemvm: this.commande.date_reception,
     };
+  }
+
+  receptionStatus() {
+    return this.qte == this.qte_recept;
   }
 }

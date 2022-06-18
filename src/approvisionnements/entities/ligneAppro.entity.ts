@@ -27,6 +27,7 @@ export class LigneAppro {
   @ManyToOne((type) => Imputation, (imputation) => imputation.ligneAppros, {
     cascade: ['insert'],
     onDelete: 'CASCADE',
+    eager: true,
   })
   imputation: Imputation;
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Stock } from 'src/stock/entities/stock.entity';
 import { getRepository, Repository } from 'typeorm';
 import { CreateCommandeDto } from './dto/create-commande.dto';
 import { UpdateCommandeDto } from './dto/update-commande.dto';
@@ -24,6 +25,15 @@ export class CommandesService {
       .reduce((a, b) => a + parseFloat(b.totalPrixTTC), 0)
       .toString();
     return await this.commandeRep.save(result);
+  }
+
+  async receptionCommande(id: number, updateCommandeDto: UpdateCommandeDto) {
+    const ligneCommandes = updateCommandeDto.ligneCommandes;
+    ligneCommandes.forEach(async (ligne) => {
+      if (ligne.receptionStatus()) {
+        await getRepository(Stock).save(ligne.toStock());
+      }
+    });
   }
 
   findAll() {

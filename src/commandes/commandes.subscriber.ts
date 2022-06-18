@@ -20,6 +20,7 @@ export class CommandeSubscriber implements EntitySubscriberInterface<Commande> {
   }
 
   // entrer stock
+  /*
   async afterUpdate(event: UpdateEvent<Commande>) {
     console.log('triggered commande subscriber!!');
 
@@ -31,8 +32,8 @@ export class CommandeSubscriber implements EntitySubscriberInterface<Commande> {
     let recept = commande.ligneCommandes.filter((a) => a.etat == true);
     recept.forEach((a) => {
       this.stockService.create(a.ligneToStock());
-    });*/
+    });
     //console.log(recept);
     //console.log(recept);
-  }
+  }*/
 }

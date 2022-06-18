@@ -25,15 +25,11 @@ export class ApprovisionnementsService {
   }
 
   async findAll() {
-    return this.approRep.find({
-      relations: ['ligneAppros', 'demandeur', 'imputation'],
-    });
+    return this.approRep.find({ relations: ['ligneAppros'] });
   }
 
   async findById(id: number) {
-    return this.approRep.findOne({
-      relations: ['ligneAppros', 'demandeur', 'imputation'],
-    });
+    return this.approRep.findOne();
   }
 
   async update(id: number, newAppro: UpdateApproDto) {

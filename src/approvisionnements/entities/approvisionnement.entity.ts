@@ -42,6 +42,7 @@ export class Approvisionnement {
   @ManyToOne((type) => Demandeur, (demandeur) => demandeur.appros, {
     cascade: ['insert'],
     onDelete: 'CASCADE',
+    eager: true,
   })
   demandeur: Demandeur;
 }

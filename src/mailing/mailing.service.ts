@@ -8,7 +8,6 @@ export class MailingService {
   async sendMsg() {
     await this.mailerService.sendMail({
       to: 'karemaouissaoui@gmail.com',
-      from: '"Support Team" <support@example.com>', // override default from
       subject: 'Welcome to Nice App! Confirm your Email',
       html: '<p>helloooooooooooooo </p>',
     });

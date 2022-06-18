@@ -28,7 +28,6 @@ export class Stock {
   datemvm: Date;
 
   //relations
-
   @ManyToOne((type) => Depot, (depot) => depot.stocks, { eager: true })
   depot: Depot;
 

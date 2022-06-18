@@ -41,6 +41,8 @@ export class StockService {
     return await getRepository(Article).save(getArticle);
   }
 
+  createReception() {}
+
   async findAll() {
     return await this.stockRep.find({ relations: ['Depot'] });
   }
